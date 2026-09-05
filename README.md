@@ -27,7 +27,7 @@ framework source.
 [Türkçe](README_TR.md) · [AhdCode](https://github.com/aliharundaldalli/AhdCode) · [v0.15.0 release](https://github.com/aliharundaldalli/AhdCode/releases/tag/v0.15.0)
 
 <p align="center">
-  <img src="docs/screenshots/home.png" alt="Ahd Akademi Matematik home page" width="920">
+  <img src="docs/screenshots/home-hero.png" alt="Ahd Akademi Matematik home page" width="920">
 </p>
 
 ## What v0.15 looks like in a real app

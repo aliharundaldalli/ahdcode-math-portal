@@ -27,7 +27,7 @@ kaynağına bağımlı değildir.
 [English](README.md) · [AhdCode](https://github.com/aliharundaldalli/AhdCode) · [v0.15.0 sürümü](https://github.com/aliharundaldalli/AhdCode/releases/tag/v0.15.0)
 
 <p align="center">
-  <img src="docs/screenshots/home.png" alt="Ahd Akademi Matematik ana sayfası" width="920">
+  <img src="docs/screenshots/home-hero.png" alt="Ahd Akademi Matematik ana sayfası" width="920">
 </p>
 
 ## v0.15 gerçek bir uygulamada
