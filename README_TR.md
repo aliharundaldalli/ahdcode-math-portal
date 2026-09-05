@@ -47,19 +47,27 @@ kaynağına bağımlı değildir.
 Arayüz Türkçe. Sorulardaki matematik yerel MathJax ile dizilir.
 
 <p align="center">
-  <img src="docs/screenshots/question.png" alt="MathJax ile yayımlanmış soru" width="720">
+  <img src="docs/screenshots/questions.png" alt="Arama ve konu süzgeçli soru kataloğu" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/login.png" alt="Giriş" width="640">
+  <img src="docs/screenshots/question.png" alt="MathJax ile yayımlanmış soru" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin.png" alt="Yönetici paneli" width="720">
+  <img src="docs/screenshots/login.png" alt="Giriş" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin-users.png" alt="Yönetici kullanıcı listesi; ad ve e-posta bulanık" width="720">
+  <img src="docs/screenshots/admin.png" alt="Yönetici paneli" width="920">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/admin-sliders.png" alt="Yönetici slayt yönetimi" width="920">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/admin-users.png" alt="Yönetici kullanıcı listesi; ad ve e-posta bulanık" width="920">
 </p>
 
 ## Düzen

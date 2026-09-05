@@ -1,14 +1,132 @@
 /* A small amount of application styling on top of Bootstrap.
    Bootstrap itself is vendored unmodified in bootstrap.min.css. */
 
-.navbar {
-    /* The inline background-color comes from the validated header_color
-       setting; this only supplies the fallback and the text colour. */
-    background-color: #0d6efd;
+html {
+    scroll-behavior: smooth;
 }
 
-.navbar a.nav-link:hover {
-    text-decoration: underline;
+#questions {
+    scroll-margin-top: 90px;
+}
+
+/* Premium Sticky Navbar */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+}
+
+.navbar {
+    background-color: #0d6efd;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.15), 0 2px 6px -1px rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar-brand-logo {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar a.navbar-brand:hover .navbar-brand-logo {
+    transform: scale(1.08) rotate(-4deg);
+}
+
+.navbar .nav-link {
+    border-radius: 8px;
+    padding: 0.4rem 0.85rem !important;
+    margin: 0 2px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: all 0.18s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.navbar .nav-link:hover {
+    text-decoration: none !important;
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.navbar .nav-link:active {
+    transform: translateY(0);
+}
+
+/* Navbar Buttons */
+.btn-nav-profile {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 0.35rem 0.75rem;
+    font-weight: 500;
+    backdrop-filter: blur(6px);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-nav-profile:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.btn-nav-logout {
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid transparent;
+    color: #0f172a;
+    border-radius: 8px;
+    padding: 0.35rem 0.75rem;
+    font-weight: 600;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-nav-logout:hover {
+    background-color: #ffffff;
+    color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-nav-login {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.35rem 0.85rem;
+    font-weight: 600;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-nav-login:hover {
+    background-color: #ffffff;
+    color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-nav-register {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 0.35rem 0.85rem;
+    font-weight: 500;
+    backdrop-filter: blur(6px);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-nav-register:hover {
+    background: rgba(255, 255, 255, 0.24);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 main {
@@ -318,6 +436,303 @@ mjx-container {
     padding: 0.35rem 0.6rem;
     font-size: 0.75rem;
 }
+
+/* Auth Card & Modern Sign-in / Sign-up Styling */
+.auth-main {
+    min-height: 75vh;
+    background: radial-gradient(circle at 50% 15%, rgba(37, 99, 235, 0.05), transparent 75%);
+    display: flex;
+    align-items: center;
+}
+
+.auth-card {
+    border-radius: 16px !important;
+    background: #ffffff;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #0891b2, #4f46e5);
+}
+
+.auth-logo {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-logo:hover {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.alert-primary-subtle {
+    background-color: #eff6ff;
+    color: #1e40af;
+    border-color: #bfdbfe;
+    border-radius: 10px;
+}
+
+.alert-success-subtle {
+    background-color: #f0fdf4;
+    color: #166534;
+    border-color: #bbf7d0;
+    border-radius: 10px;
+}
+
+/* Profile Page Styling */
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Hero Slider & Carousel
+   ========================================================================== */
+.hero-slider-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #0f172a;
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+    outline: none;
+}
+
+.hero-slider-track {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    height: 440px;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.02);
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 2.5rem;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.hero-slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.98) contrast(1.02);
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(15, 23, 42, 0.05) 0%,
+        rgba(15, 23, 42, 0.2) 40%,
+        rgba(15, 23, 42, 0.72) 100%
+    );
+}
+
+.hero-slide-container {
+    position: relative;
+    z-index: 3;
+    padding: 1rem 5.5rem 0.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.hero-slide-content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-slide-badge {
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.hero-slide-title {
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.25;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    letter-spacing: -0.01em;
+}
+
+.hero-slide-desc {
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem) !important;
+    line-height: 1.55;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-action-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 1.25rem;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-action-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px -3px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* Controls */
+.hero-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.hero-slider-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.08);
+}
+
+.hero-slider-btn-prev {
+    left: 1.25rem;
+}
+
+.hero-slider-btn-next {
+    right: 1.25rem;
+}
+
+/* Indicators */
+.hero-slider-indicators {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.hero-indicator:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-indicator.active {
+    width: 26px;
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Progress bar */
+.hero-slider-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 11;
+}
+
+.hero-slider-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #38bdf8, #2563eb);
+}
+
+@media (max-width: 768px) {
+    .hero-slider-track {
+        min-height: 480px;
+        height: auto;
+    }
+    .hero-slide {
+        position: relative;
+        min-height: 480px;
+    }
+    .hero-slide-container {
+        padding: 2.5rem 1.5rem 3.5rem;
+    }
+    .hero-slider-btn {
+        display: none !important;
+    }
+}
+
+
+
 
 
 

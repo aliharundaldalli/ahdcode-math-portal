@@ -5,6 +5,7 @@ require("Services/Context.ahd")
 require("Services/Session.ahd")
 require("Services/Scraper.ahd")
 require("Repositories/Questions.ahd")
+require("Repositories/Sliders.ahd")
 bring Web
 from Web bring (Request, Response, HTMLNode, Session)
 
@@ -13,9 +14,15 @@ homePage: Function := (request: Request) -> Response {
     context: Local PageContext := contextFor(session)
     questions: Local List<QuestionRecord> := questionsPublished()
     feed: Local MathScrapeOutcome := fetchMathFeed()
+    sliders: Local List<SliderRecord> := slidersActive()
+
+    heroNode: Local HTMLNode := heroSection(context.siteName)
+    if len(sliders) > 0 {
+        heroNode = homeSliderSection(sliders)
+    }
 
     content: Local List<HTMLNode> := [
-        heroSection(context.siteName)
+        heroNode
         mathFeedSection(feed)
         questionsSection(questions)
     ]
@@ -33,6 +40,120 @@ homePage: Function := (request: Request) -> Response {
             context.flashKind
             content
         )
+    )
+}
+
+homeSliderSection: Function := (sliders: List<SliderRecord>) -> HTMLNode {
+    slideNodes: Local List<HTMLNode> := []
+    indicatorNodes: Local List<HTMLNode> := []
+    index: Local Int := 0
+
+    for slider in sliders {
+        activeClass: Local String := ""
+        if index == 0 {
+            activeClass = " active"
+        }
+
+        buttonNode: Local HTMLNode := Web.UI.div([], {})
+        if slider.buttonText != "" {
+            buttonNode = Web.UI.aNodes(
+                slider.buttonUrl
+                [
+                    Web.UI.text(slider.buttonText)
+                    Web.UI.i("", {"class": "fa-solid fa-arrow-right-long ms-2"})
+                ]
+                {
+                    "class": "btn btn-primary btn-sm rounded-pill px-3 py-1 shadow hero-action-btn"
+                }
+            )
+        }
+
+        slideNode: Local HTMLNode := Web.UI.div(
+            [
+                Web.UI.img(
+                    slider.imageUrl
+                    slider.title
+                    {"class": "hero-slide-bg", "loading": "eager"}
+                )
+                Web.UI.div([], {"class": "hero-slide-overlay"})
+                Web.UI.div(
+                    [
+                        Web.UI.div(
+                            [
+                                Web.UI.h2(
+                                    slider.title
+                                    {
+                                        "class": "h4 fw-bold text-white mb-2 hero-slide-title"
+                                    }
+                                )
+                                Web.UI.p(
+                                    slider.subtitle
+                                    {
+                                        "class": "small text-light text-opacity-95 mb-3 hero-slide-desc"
+                                    }
+                                )
+                                buttonNode
+                            ]
+                            {"class": "hero-slide-content"}
+                        )
+                    ]
+                    {"class": "container hero-slide-container"}
+                )
+            ]
+            {"class": "hero-slide{activeClass}"}
+        )
+        slideNodes.add(slideNode)
+
+        indicatorClass: Local String := "hero-indicator"
+        if index == 0 {
+            indicatorClass = "hero-indicator active"
+        }
+        indicatorNode: Local HTMLNode := Web.UI.button(
+            ""
+            {
+                "type": "button"
+                "class": indicatorClass
+                "aria-label": "Slayt {str(index + 1)}"
+            }
+        )
+        indicatorNodes.add(indicatorNode)
+        index = index + 1
+    }
+
+    return Web.UI.section(
+        [
+            Web.UI.div(
+                [
+                    Web.UI.div(
+                        [Web.UI.div([], {"class": "hero-slider-progress-bar"})]
+                        {"class": "hero-slider-progress"}
+                    )
+                    Web.UI.div(slideNodes, {"class": "hero-slider-track"})
+                    Web.UI.buttonNodes(
+                        [Web.UI.i("", {"class": "fa-solid fa-chevron-left"})]
+                        {
+                            "type": "button"
+                            "class": "hero-slider-btn hero-slider-btn-prev"
+                            "aria-label": "Önceki Slayt"
+                        }
+                    )
+                    Web.UI.buttonNodes(
+                        [Web.UI.i("", {"class": "fa-solid fa-chevron-right"})]
+                        {
+                            "type": "button"
+                            "class": "hero-slider-btn hero-slider-btn-next"
+                            "aria-label": "Sonraki Slayt"
+                        }
+                    )
+                    Web.UI.div(
+                        indicatorNodes
+                        {"class": "hero-slider-indicators"}
+                    )
+                ]
+                {"class": "hero-slider-container shadow-sm mb-4"}
+            )
+        ]
+        {"class": "mb-4"}
     )
 }
 
@@ -73,18 +194,25 @@ heroSection: Function := (siteName: String) -> HTMLNode {
 mathFeedSection: Function := (feed: MathScrapeOutcome) -> HTMLNode {
     statusBadge: Local HTMLNode := Web.UI.spanNodes(
         [
-            Web.UI.i("", {"class": "fa-solid fa-circle-check me-1"})
-            Web.UI.text("HTTP {str(feed.statusCode)} Canlı")
+            Web.UI.i(
+                ""
+                {"class": "fa-solid fa-circle-check me-1 text-success"}
+            )
+            Web.UI.text("Güncel Akış")
         ]
-        {"class": "badge text-bg-success me-2"}
+        {
+            "class": "badge text-bg-success-subtle text-success-emphasis border border-success-subtle me-2"
+        }
     )
     if feed.success == false {
         statusBadge = Web.UI.spanNodes(
             [
-                Web.UI.i("", {"class": "fa-solid fa-database me-1"})
-                Web.UI.text("Yerel Önbellek")
+                Web.UI.i("", {"class": "fa-solid fa-clock-rotate-left me-1"})
+                Web.UI.text("Önbellek")
             ]
-            {"class": "badge text-bg-secondary me-2"}
+            {
+                "class": "badge text-bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle me-2"
+            }
         )
     }
 
@@ -166,11 +294,11 @@ mathFeedSection: Function := (feed: MathScrapeOutcome) -> HTMLNode {
                                     Web.UI.i(
                                         ""
                                         {
-                                            "class": "fa-solid fa-globe text-primary fs-4 me-2"
+                                            "class": "fa-solid fa-newspaper text-primary fs-4 me-2"
                                         }
                                     )
                                     Web.UI.h2(
-                                        "Canlı Web Kazıma: Matematik Bülteni"
+                                        "Matematik Dünyasından Güncel Başlıklar"
                                         {"class": "h4 mb-0 fw-bold"}
                                     )
                                 ]
@@ -184,15 +312,13 @@ mathFeedSection: Function := (feed: MathScrapeOutcome) -> HTMLNode {
                                             Web.UI.i(
                                                 ""
                                                 {
-                                                    "class": "fa-solid fa-network-wired me-1"
+                                                    "class": "fa-brands fa-wikipedia-w me-1"
                                                 }
                                             )
-                                            Web.UI.text(
-                                                "HTTP.client + HTML.parse"
-                                            )
+                                            Web.UI.text("Vikipedi Akışı")
                                         ]
                                         {
-                                            "class": "badge text-bg-info-subtle text-info-emphasis border border-info-subtle"
+                                            "class": "badge text-bg-primary-subtle text-primary border border-primary-subtle"
                                         }
                                     )
                                 ]
@@ -290,6 +416,7 @@ questionsSection: Function := (questions: List<QuestionRecord>) -> HTMLNode {
                     {"class": "alert alert-info"}
                 )
             ]
+            {"id": "questions"}
         )
     }
 
@@ -303,5 +430,8 @@ questionsSection: Function := (questions: List<QuestionRecord>) -> HTMLNode {
         )
     }
 
-    return Web.UI.section([headerNode, Web.UI.div(cards, {"class": "row"})])
+    return Web.UI.section(
+        [headerNode, Web.UI.div(cards, {"class": "row"})]
+        {"id": "questions"}
+    )
 }

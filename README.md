@@ -47,19 +47,27 @@ framework source.
 The public UI is Turkish. Math in questions is typeset with local MathJax.
 
 <p align="center">
-  <img src="docs/screenshots/question.png" alt="Published question with MathJax" width="720">
+  <img src="docs/screenshots/questions.png" alt="Questions catalog with search and topic filters" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/login.png" alt="Login" width="640">
+  <img src="docs/screenshots/question.png" alt="Published question with MathJax" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin.png" alt="Admin dashboard" width="720">
+  <img src="docs/screenshots/login.png" alt="Login" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin-users.png" alt="Admin users list with names and emails blurred" width="720">
+  <img src="docs/screenshots/admin.png" alt="Admin dashboard" width="920">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/admin-sliders.png" alt="Admin slider management" width="920">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/admin-users.png" alt="Admin users list with names and emails blurred" width="920">
 </p>
 
 ## Layout
