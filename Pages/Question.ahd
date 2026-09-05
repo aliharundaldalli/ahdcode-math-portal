@@ -1,8 +1,6 @@
 // One published question, plus the signed-in user's solution upload.
 //
-// v0.15 routing matches exact paths, so the question is identified by a query
-// parameter rather than a path segment. That is the released routing model,
-// not a workaround.
+// /question/2 is a one-segment wildcard. /question?id=2 still redirects.
 require("Layouts/Main.ahd")
 require("Components/FormField.ahd")
 require("Components/SolutionModal.ahd")
@@ -15,34 +13,28 @@ require("Repositories/Users.ahd")
 require("Repositories/Solutions.ahd")
 require("Support/Validation.ahd")
 bring Web
-from Web bring (Request, Response, HTMLNode, Session)
+from Web bring (Request, Response, HTMLNode, Session, RequestContext)
+
+questionLegacyPage: Function := (request: Request) -> Response {
+    web: Local RequestContext := Web.context(request, sessionStore())
+    session: Local Session := web.session
+    id: Local Int := validationPositiveInt(request.query("id"))
+    if id > 0 {
+        return web.respond(Web.redirect("/question/{str(id)}"))
+    }
+
+    return web.respond(questionMissing(session, contextFor(session)))
+}
 
 questionPage: Function := (request: Request) -> Response {
-    session: Local Session := sessionOpen(request)
+    web: Local RequestContext := Web.context(request, sessionStore())
+    session: Local Session := web.session
     context: Local PageContext := contextFor(session)
-    id: Local Int := validationPositiveInt(request.query("id"))
+    id: Local Int := questionIDFromRequest(request)
     question: Local QuestionRecord? := questionsFindPublished(id)
 
     if question == null {
-        return sessionCommit(
-            session
-            mainLayout(
-                session
-                "Soru bulunamadı"
-                context.siteName
-                context.headerColor
-                context.user
-                context.isAdmin
-                context.flash
-                context.flashKind
-                [
-                    Web.UI.p(
-                        "Böyle bir yayımlanmış soru yok."
-                        {"class": "alert alert-warning"}
-                    )
-                ]
-            )
-        )
+        return web.respond(questionMissing(session, context))
     }
 
     content: Local List<HTMLNode> := [Web.UI.article([
@@ -73,8 +65,7 @@ questionPage: Function := (request: Request) -> Response {
             question
         ), communitySolutionsSection(context, question), solutionModalNode()]
 
-    return sessionCommit(
-        session
+    return web.respond(
         mainLayout(
             session
             question.title
@@ -314,5 +305,31 @@ communitySolutionsSection: Function := (
     return Web.UI.section(
         [titleNode, Web.UI.div(cards, {"class": "solutions-list"})]
         {"class": "border-top pt-4 mt-4"}
+    )
+}
+
+questionIDFromRequest: Function := (request: Request) -> Int {
+    return validationPathID(request.path(), "/question/", request.query("id"))
+}
+
+questionMissing: Function := (
+    session: Session
+    context: PageContext
+) -> Response {
+    return mainLayout(
+        session
+        "Soru bulunamadı"
+        context.siteName
+        context.headerColor
+        context.user
+        context.isAdmin
+        context.flash
+        context.flashKind
+        [
+            Web.UI.p(
+                "Böyle bir yayımlanmış soru yok."
+                {"class": "alert alert-warning"}
+            )
+        ]
     )
 }
