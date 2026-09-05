@@ -51,15 +51,15 @@ The public UI is Turkish. Math in questions is typeset with local MathJax.
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/question.png" alt="Published question with MathJax" width="920">
+  <img src="docs/screenshots/question-detail.png" alt="Published question with MathJax" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/login.png" alt="Login" width="920">
+  <img src="docs/screenshots/login-form.png" alt="Login" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin.png" alt="Admin dashboard" width="920">
+  <img src="docs/screenshots/admin-panel.png" alt="Admin dashboard" width="920">
 </p>
 
 <p align="center">
@@ -67,7 +67,7 @@ The public UI is Turkish. Math in questions is typeset with local MathJax.
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin-users.png" alt="Admin users list with names and emails blurred" width="920">
+  <img src="docs/screenshots/admin-users-blurred.png" alt="Admin users list with names and emails blurred" width="920">
 </p>
 
 ## Layout

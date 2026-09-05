@@ -51,15 +51,15 @@ Arayüz Türkçe. Sorulardaki matematik yerel MathJax ile dizilir.
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/question.png" alt="MathJax ile yayımlanmış soru" width="920">
+  <img src="docs/screenshots/question-detail.png" alt="MathJax ile yayımlanmış soru" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/login.png" alt="Giriş" width="920">
+  <img src="docs/screenshots/login-form.png" alt="Giriş" width="920">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin.png" alt="Yönetici paneli" width="920">
+  <img src="docs/screenshots/admin-panel.png" alt="Yönetici paneli" width="920">
 </p>
 
 <p align="center">
@@ -67,7 +67,7 @@ Arayüz Türkçe. Sorulardaki matematik yerel MathJax ile dizilir.
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/admin-users.png" alt="Yönetici kullanıcı listesi; ad ve e-posta bulanık" width="920">
+  <img src="docs/screenshots/admin-users-blurred.png" alt="Yönetici kullanıcı listesi; ad ve e-posta bulanık" width="920">
 </p>
 
 ## Düzen
