@@ -1,0 +1,148 @@
+// The site navigation bar.
+//
+// A Component is an ordinary Function returning an HTMLNode. The header colour
+// is a validated #RRGGBB value from site_settings -- validated before it is
+// stored and again before it reaches the style attribute, so a stored setting
+// can never carry arbitrary CSS.
+require("Repositories/Users.ahd")
+bring Web
+from Web bring HTMLNode
+
+navbar: Function := (
+    token: String
+    siteName: String
+    headerColor: String
+    user: UserRecord?
+    isAdmin: Bool
+) -> HTMLNode {
+    links: Local List<HTMLNode> := [
+        Web.UI.liNodes(
+            [
+                Web.UI.aNodes(
+                    "/"
+                    [
+                        Web.UI.i("", {"class": "fa-solid fa-list-check me-1"})
+                        Web.UI.text("Sorular")
+                    ]
+                    {"class": "nav-link px-2 text-white"}
+                )
+            ]
+            {"class": "nav-item"}
+        )
+    ]
+    if isAdmin {
+        links.add(
+            Web.UI.liNodes(
+                [
+                    Web.UI.aNodes(
+                        "/admin"
+                        [
+                            Web.UI.i(
+                                ""
+                                {"class": "fa-solid fa-shield-halved me-1"}
+                            )
+                            Web.UI.text("Yönetim")
+                        ]
+                        {"class": "nav-link px-2 text-white"}
+                    )
+                ]
+                {"class": "nav-item"}
+            )
+        )
+    }
+
+    return Web.UI.header(
+        [
+            Web.UI.nav(
+                [
+                    Web.UI.div(
+                        [
+                            Web.UI.aNodes(
+                                "/"
+                                [
+                                    Web.UI.img(
+                                        "/assets/images/logo.png"
+                                        "AhdCode"
+                                        {
+                                            "width": "34"
+                                            "height": "34"
+                                            "class": "me-2 rounded shadow-sm"
+                                        }
+                                    )
+                                    Web.UI.span(
+                                        siteName
+                                        {"class": "fs-5 fw-semibold"}
+                                    )
+                                ]
+                                {
+                                    "class": "d-flex align-items-center text-white text-decoration-none me-auto"
+                                }
+                            )
+                            Web.UI.ul(links, {"class": "nav me-3 mb-0"})
+                            navbarAccount(user, token)
+                        ]
+                        {
+                            "class": "container d-flex flex-wrap align-items-center py-2"
+                        }
+                    )
+                ]
+                {"class": "navbar", "style": "background-color: {headerColor};"}
+            )
+        ]
+    )
+}
+
+navbarAccount: Function := (user: UserRecord?, token: String) -> HTMLNode {
+    if user == null {
+        return Web.UI.div(
+            [
+                Web.UI.aNodes(
+                    "/login"
+                    [
+                        Web.UI.i(
+                            ""
+                            {"class": "fa-solid fa-right-to-bracket me-1"}
+                        )
+                        Web.UI.text("Giriş")
+                    ]
+                    {"class": "btn btn-sm btn-light me-2"}
+                )
+                Web.UI.aNodes(
+                    "/register"
+                    [
+                        Web.UI.i("", {"class": "fa-solid fa-user-plus me-1"})
+                        Web.UI.text("Kayıt ol")
+                    ]
+                    {"class": "btn btn-sm btn-outline-light"}
+                )
+            ]
+            {"class": "d-flex"}
+        )
+    }
+
+    return Web.UI.formTo(
+        "/logout"
+        "post"
+        [
+            Web.UI.input("hidden", "_csrf", token)
+            Web.UI.spanNodes(
+                [
+                    Web.UI.i("", {"class": "fa-regular fa-circle-user me-1"})
+                    Web.UI.text(user.name)
+                ]
+                {"class": "text-white me-3 align-self-center"}
+            )
+            Web.UI.buttonNodes(
+                [
+                    Web.UI.i(
+                        ""
+                        {"class": "fa-solid fa-arrow-right-from-bracket me-1"}
+                    )
+                    Web.UI.text("Çıkış")
+                ]
+                {"type": "submit", "class": "btn btn-sm btn-light"}
+            )
+        ]
+        {"class": "d-flex", "id": "logout-form"}
+    )
+}

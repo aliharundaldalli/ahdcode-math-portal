@@ -1,0 +1,103 @@
+require("Layouts/Admin.ahd")
+require("Services/Context.ahd")
+require("Services/Session.ahd")
+require("Services/Guard.ahd")
+require("Repositories/Users.ahd")
+require("Repositories/Questions.ahd")
+require("Repositories/Solutions.ahd")
+bring Web
+from Web bring (Request, Response, HTMLNode, Session)
+
+adminDashboardPage: Function := (request: Request) -> Response {
+    session: Local Session := sessionOpen(request)
+    context: Local PageContext := contextFor(session)
+    guard: Local GuardResult := adminGuard(session, context)
+    if guard.allowed == false {
+        return sessionCommit(session, guard.refusal)
+    }
+
+    cards: Local List<HTMLNode> := [
+        adminStatCard(
+            "Kullanıcı"
+            str(usersCount())
+            "fa-solid fa-users fa-xl"
+            "stat-primary"
+        )
+        adminStatCard(
+            "Yayımlanan soru"
+            str(questionsCountByStatus("published"))
+            "fa-solid fa-circle-check fa-xl"
+            "stat-success"
+        )
+        adminStatCard(
+            "Taslak soru"
+            str(questionsCountByStatus("draft"))
+            "fa-solid fa-file-pen fa-xl"
+            "stat-warning"
+        )
+        adminStatCard(
+            "Çözüm"
+            str(solutionsCount())
+            "fa-solid fa-lightbulb fa-xl"
+            "stat-info"
+        )
+    ]
+
+    return sessionCommit(
+        session
+        adminLayout(
+            session
+            "Panel"
+            context.siteName
+            context.headerColor
+            context.user
+            "/admin"
+            context.flash
+            context.flashKind
+            [Web.UI.div(cards, {"class": "row g-3"})]
+        )
+    )
+}
+
+adminStatCard: Function := (
+    label: String
+    value: String
+    iconClass: String
+    colorClass: String
+) -> HTMLNode {
+    return Web.UI.div(
+        [
+            Web.UI.div(
+                [
+                    Web.UI.div(
+                        [
+                            Web.UI.div(
+                                [
+                                    Web.UI.p(
+                                        label
+                                        {
+                                            "class": "text-body-secondary small fw-medium mb-1"
+                                        }
+                                    )
+                                    Web.UI.p(
+                                        value
+                                        {"class": "fs-2 fw-bold mb-0 text-dark"}
+                                    )
+                                ]
+                            )
+                            Web.UI.div(
+                                [Web.UI.i("", {"class": iconClass})]
+                                {"class": "stat-icon-badge {colorClass}"}
+                            )
+                        ]
+                        {
+                            "class": "card-body d-flex align-items-center justify-content-between p-4"
+                        }
+                    )
+                ]
+                {"class": "card admin-stat-card h-100 border-0"}
+            )
+        ]
+        {"class": "col-6 col-lg-3"}
+    )
+}

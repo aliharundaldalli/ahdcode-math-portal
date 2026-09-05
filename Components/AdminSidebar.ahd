@@ -1,0 +1,63 @@
+bring Web
+from Web bring HTMLNode
+
+adminSidebar: Function := (current: String) -> HTMLNode {
+    return Web.UI.nav(
+        [
+            Web.UI.ul(
+                [
+                    adminSidebarLink(
+                        "/admin"
+                        "fa-solid fa-gauge-high me-2"
+                        "Panel"
+                        current
+                    )
+                    adminSidebarLink(
+                        "/admin/users"
+                        "fa-solid fa-users me-2"
+                        "Kullanıcılar"
+                        current
+                    )
+                    adminSidebarLink(
+                        "/admin/questions"
+                        "fa-solid fa-circle-question me-2"
+                        "Sorular"
+                        current
+                    )
+                    adminSidebarLink(
+                        "/admin/solutions"
+                        "fa-solid fa-file-lines me-2"
+                        "Çözümler"
+                        current
+                    )
+                    adminSidebarLink(
+                        "/admin/settings"
+                        "fa-solid fa-sliders me-2"
+                        "Ayarlar"
+                        current
+                    )
+                ]
+                {"class": "list-group"}
+            )
+        ]
+        {"class": "mb-4"}
+    )
+}
+
+adminSidebarLink: Function := (
+    href: String
+    iconClass: String
+    label: String
+    current: String
+) -> HTMLNode {
+    style: Local String := "list-group-item list-group-item-action"
+    if href == current {
+        style = "list-group-item list-group-item-action active"
+    }
+
+    return Web.UI.aNodes(
+        href
+        [Web.UI.i("", {"class": iconClass}), Web.UI.text(label)]
+        {"class": style}
+    )
+}
